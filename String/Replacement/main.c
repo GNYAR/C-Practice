@@ -2,12 +2,14 @@
 #include <stdbool.h>
 #include <stdio.h>
 #include <string.h>
+#define WORD_SIZE 100
+#define ARTICLE_SIZE 4095
 #define DEBUG true
 
 int main()
 {
-  char input[300] = "";
-  char article[4095] = "";
+  char input[WORD_SIZE * 3] = "";
+  char article[ARTICLE_SIZE] = "";
   // User input
   printf("Enter pattern, replacement, and at most one parameter:\n");
   gets(input);
@@ -15,8 +17,8 @@ int main()
   gets(article);
 
   // Split input parameters
-  char inputs[3][100] = {"", "", ""};
-  char transformedInput[100] = "";
+  char inputs[3][WORD_SIZE] = {"", "", ""};
+  char transformedInput[WORD_SIZE] = "";
   int i = 0, p = 0, q = 0;
   do
   {
@@ -48,8 +50,8 @@ int main()
     printf("this is case: %d\n", isCaseInsensitive);
 
   // Split input article
-  char word[100] = "";
-  char transformedWord[100] = "";
+  char word[WORD_SIZE] = "";
+  char transformedWord[WORD_SIZE] = "";
   i = 0;
   q = 0;
   do
