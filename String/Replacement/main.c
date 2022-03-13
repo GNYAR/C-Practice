@@ -2,6 +2,7 @@
 #include <stdbool.h>
 #include <stdio.h>
 #include <string.h>
+#define DEBUG true
 
 int main()
 {
@@ -43,6 +44,8 @@ int main()
     printf("The input format: string1 string2 [parameter]");
     return 0;
   }
+  if (DEBUG)
+    printf("this is case: %d\n", isCaseInsensitive);
 
   // Split input article
   char word[100] = "";
@@ -60,6 +63,8 @@ int main()
     }
     word[q] = '\0';
     transformedWord[q] = '\0';
+    if (DEBUG && strcmp(word, "") != 0)
+      printf("the word is: %s\n", word);
 
     // Search in word
     char *ptr = isCaseInsensitive ?
@@ -78,6 +83,6 @@ int main()
       printf("%s\n", word);
     }
     q = 0;
-  } while (article[i++] != '\0');
+  } while (article[++i] != '\0');
   return 0;
 }
