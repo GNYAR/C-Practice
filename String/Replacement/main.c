@@ -1,7 +1,7 @@
-#include <stdio.h>
-#include <string.h>
 #include <ctype.h>
 #include <stdbool.h>
+#include <stdio.h>
+#include <string.h>
 
 int main()
 {
@@ -12,12 +12,11 @@ int main()
   gets(input);
   printf("Enter the article:\n");
   gets(article);
-  // String split
+
+  // Split input parameters
   char inputs[3][100] = {"", "", ""};
   char transformedInput[100] = "";
-  int i = 0;
-  int p = 0;
-  int q = 0;
+  int i = 0, p = 0, q = 0;
   do
   {
     char c = input[i];
@@ -27,66 +26,58 @@ int main()
         transformedInput[q] = '\0';
       inputs[p++][q] = '\0';
       q = 0;
+      continue;
     }
-    else
-    {
-      if (p == 0)
-        transformedInput[q] = toupper(c);
-      inputs[p][q++] = c;
-    }
+    if (p == 0)
+      transformedInput[q] = toupper(c);
+    inputs[p][q++] = c;
   } while (input[i++] != '\0' && p <= 3);
-  // Check param
+
+  // Check input parameters
   bool isCaseInsensitive = strcmp(inputs[2], "-i") == 0;
-  if (
-      input[i] == '\0' &&
-      inputs[0][0] != '\0' &&
-      inputs[1][0] != '\0' &&
-      (inputs[2][0] == '\0' || isCaseInsensitive))
+  if (inputs[0][0] == '\0' ||
+      inputs[1][0] == '\0' ||
+      (inputs[2][0] != '\0' && !isCaseInsensitive) ||
+      input[i] != '\0')
   {
-    // For each char
-    char word[100] = "";
-    char transformedWord[100] = "";
-    i = 0;
-    q = 0;
-    do
-    {
-      char c = article[i];
-      if (isalnum(c) || c == '-')
-      {
-        word[q] = c;
-        transformedWord[q++] = toupper(c);
-        continue;
-      }
-      // For each word
-      word[q] = '\0';
-      transformedWord[q] = '\0';
-      if (isCaseInsensitive)
-      {
-        char *ptr = strstr(transformedWord, transformedInput);
-        while (ptr != NULL)
-        {
-          int index = ptr - transformedWord;
-          strncpy(&word[index], inputs[1], strlen(inputs[1]));
-          strncpy(ptr, inputs[1], strlen(inputs[1]));
-          ptr = strstr(transformedWord, transformedInput);
-          printf("%s\n", word);
-        }
-      }
-      else
-      {
-        char *ptr = strstr(word, inputs[0]);
-        while (ptr != NULL)
-        {
-          strncpy(ptr, inputs[1], strlen(inputs[1]));
-          ptr = strstr(word, inputs[0]);
-          printf("%s\n", word);
-        }
-      };
-      q = 0;
-    } while (article[i++] != '\0');
+    printf("The input format: string1 string2 [parameter]");
     return 0;
   }
-  // Wrong input
-  printf("The input format: string1 string2 [parameter]");
+
+  // Split input article
+  char word[100] = "";
+  char transformedWord[100] = "";
+  i = 0;
+  q = 0;
+  do
+  {
+    char c = article[i];
+    if (isalnum(c) || c == '-')
+    {
+      word[q] = c;
+      transformedWord[q++] = toupper(c);
+      continue;
+    }
+    word[q] = '\0';
+    transformedWord[q] = '\0';
+
+    // Search in word
+    char *ptr = isCaseInsensitive ?
+      strstr(transformedWord, transformedInput) :
+      strstr(word, inputs[0]);
+    while (ptr != NULL)
+    {
+      // Replace
+      if (isCaseInsensitive)
+        strncpy(&word[ptr - transformedWord], inputs[1], strlen(inputs[1]));
+      strncpy(ptr, inputs[1], strlen(inputs[1]));
+      // Next
+      ptr = isCaseInsensitive ?
+        strstr(transformedWord, transformedInput) :
+        strstr(word, inputs[0]);
+      printf("%s\n", word);
+    }
+    q = 0;
+  } while (article[i++] != '\0');
   return 0;
 }
