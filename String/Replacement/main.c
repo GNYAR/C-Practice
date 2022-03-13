@@ -31,7 +31,7 @@ int main()
     if (p == 0)
       transformedInput[q] = toupper(c);
     inputs[p][q++] = c;
-  } while (input[i++] != '\0' && p <= 3);
+  } while (input[i++] != '\0' && p < 3);
 
   // Check input parameters
   bool isCaseInsensitive = strcmp(inputs[2], "-i") == 0;
