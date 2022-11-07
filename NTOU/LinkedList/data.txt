@@ -1,0 +1,15 @@
+附件一
+Tom     0108892 Male    DFS     0935-312342
+Mary    0921312 Female  DME     0933-312123
+John    0331331 Male    DSTM    0932-133112
+Peter   0312A23 Male    DEC     0911-131312
+Bob     0123235 Male    DHOE    02-13412123
+Amy     0231132 Female  DCS     03-23134453
+
+附件二
+Tom     0108892 Math    90      Programming     70.2
+Bob     0123235 Chinese 60      Calculus        90.3
+John    0331331 Programming     80      Calculus        90.3
+Prter   0312A23 English 90      Programming     80      Calculus        60
+Amy     0231132 Math    100     Programming     30      Calculus        20
+Mary    0921312 Math    90      Programming     80      Calculus        90
