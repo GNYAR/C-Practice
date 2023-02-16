@@ -1,15 +1,16 @@
 #include <iostream>
+#include <vector>
 #include <climits>
 #define INPUT_MAX 50000
 
 using namespace std;
 
-void loadArray(int dest[], int arr[], int start, int end);
+void loadArray(vector<int> &dest, int arr[], int start, int end);
 void merge(int arr[], int start, int middle, int end);
 void mergeSort(int arr[], int start, int end);
 void printArray(int arr[], int cnt);
 
-void loadArray(int dest[], int arr[], int start, int end)
+void loadArray(vector<int> &dest, int arr[], int start, int end)
 {
   int i = 0;
   for (; start <= end; start++)
@@ -18,15 +19,27 @@ void loadArray(int dest[], int arr[], int start, int end)
 
 void merge(int arr[], int start, int middle, int end)
 {
-  int left[INPUT_MAX], right[INPUT_MAX];
-  loadArray(left, arr, start, middle);
-  loadArray(right, arr, middle + 1, end);
-  left[middle - start + 1] = INT_MAX;
-  right[end - middle] = INT_MAX;
+  vector<int> temp(end - start + 1);
+  loadArray(temp, arr, start, end);
 
-  int i = 0, j = 0;
+  int rightEnd = temp.size() - 1;
+  int leftEnd = rightEnd / 2;
+  int i = 0, j = leftEnd + 1;
   for (; start <= end; start++)
-    arr[start] = (left[i] > right[j]) ? right[j++] : left[i++];
+  {
+    int left = (i > leftEnd) ? INT_MAX : temp[i];
+    int right = (j > rightEnd) ? INT_MAX : temp[j];
+    if (left > right)
+    {
+      arr[start] = right;
+      j++;
+    }
+    else
+    {
+      arr[start] = left;
+      i++;
+    }
+  }
 }
 
 void mergeSort(int arr[], int start, int end)
