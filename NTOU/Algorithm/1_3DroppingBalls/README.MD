@@ -9,7 +9,7 @@
 ```
 int nball = input nth ball, dep = input depth, pos = output, j;
 pos = 1,j = 1;
-while(j &lt dep) {
+while(j < dep) {
   if(nball %2 == 0)
     pos = pos*2 + 1;
   else
