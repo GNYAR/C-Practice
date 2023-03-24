@@ -8,6 +8,13 @@ void printTerm(int c, int e, bool *isFirst)
 {
   bool isOne = abs(c) == 1;
 
+  if (*isFirst && !e)
+  {
+    cout << c;
+    *isFirst = false;
+    return;
+  }
+
   if (!*isFirst || !e)
   {
     cout << (c < 0 ? " - " : " + ");
@@ -45,6 +52,10 @@ int main()
       if (input != 0)
         printTerm(input, i, &isFirst);
     }
+
+    if (isFirst)
+      cout << 0;
+
     cout << endl;
   }
 
