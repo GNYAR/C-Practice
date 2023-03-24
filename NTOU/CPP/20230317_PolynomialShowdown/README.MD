@@ -1,6 +1,6 @@
 # Polynomial Showdown
 
-[UVa 392]()
+[UVa 392](https://onlinejudge.org/index.php?option=com_onlinejudge&Itemid=8&page=show_problem&problem=328)
 
 給你一個數學多項式的係數，從 8 次方到 0 次方。你的任務是把一些不需要的項次拿掉，然後以易讀的格式來輸出。例如：給你 0, 0, 0, 1, 22, -333, 0, 1, -1 這 9 個係數，你應該要產生這樣的輸出：x^5 + 22x^4 - 333x^3 + x - 1
 
