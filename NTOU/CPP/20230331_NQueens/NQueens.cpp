@@ -1,74 +1,74 @@
 #include <iostream>
-#define MAP_SIZE 10
+#include <vector>
 
 using namespace std;
 
 class Queens
 {
 private:
-  int cnt;
-  bool queen[MAP_SIZE][MAP_SIZE];
-  bool validPosition(int, int, int);
+  int n;
+  vector<vector<string>> result;
+  vector<string> temp;
+  bool validPosition(int, int);
 
 public:
-  Queens();
-  void locateQueen(int, int, int);
-  int getCnt();
+  Queens(int);
+  void locateQueen(int, int);
+  vector<vector<string>> getResult();
 };
 
-bool Queens::validPosition(int row, int col, int n)
+bool Queens::validPosition(int row, int col)
 {
-  for (int i = 0; i < n; i++)
-    if (this->queen[row][i] || this->queen[i][col])
+  for (int i = 0; i < this->n; i++)
+    if (this->temp[row][i] == 'Q' || this->temp[i][col] == 'Q')
       return false;
 
   int i = row, j = col;
   while (i >= 0 && j >= 0)
-    if (this->queen[i--][j--])
+    if (this->temp[i--][j--] == 'Q')
       return false;
 
   i = row;
   j = col;
-  while (i >= 0 && j < n)
-    if (this->queen[i--][j++])
+  while (i >= 0 && j < this->n)
+    if (this->temp[i--][j++] == 'Q')
       return false;
 
   return true;
 }
 
-Queens::Queens()
+Queens::Queens(int n)
 {
-  this->cnt = 0;
-  for (int i = 0; i < MAP_SIZE; i++)
-    for (int j = 0; j < MAP_SIZE; j++)
-      this->queen[i][j] = false;
+  this->n = n;
+  for (int i = 0; i < n; i++)
+    this->temp.push_back(string(n, '.'));
 }
 
-void Queens::locateQueen(int row, int col, int n)
+void Queens::locateQueen(int row, int col)
 {
-  if (col == n)
+  if (col == this->n)
   {
-    this->cnt++;
+    this->result.push_back(this->temp);
     return;
   }
 
-  if (row >= n)
+  if (row >= this->n)
     return;
 
-  for (int i = 0; i < n; i++)
+  for (int i = 0; i < this->n; i++)
   {
-    if (this->validPosition(row, i, n))
+    if (this->validPosition(row, i))
     {
-      this->queen[row][i] = true;
-      this->locateQueen(row + 1, col + 1, n);
-      this->queen[row][i] = false;
+      this->temp[row][i] = 'Q';
+      this->locateQueen(row + 1, col + 1);
+      this->temp[row][i] = '.';
     }
   }
 }
 
-int Queens::getCnt()
+vector<vector<string>> Queens::getResult()
 {
-  return this->cnt;
+  return this->result;
 }
 
 int main()
@@ -76,9 +76,9 @@ int main()
   int n;
   while (cin >> n)
   {
-    Queens game;
-    game.locateQueen(0, 0, n);
-    cout << game.getCnt() << endl;
+    Queens game(n);
+    game.locateQueen(0, 0);
+    cout << game.getResult().size() << endl;
   }
 
   return 0;
