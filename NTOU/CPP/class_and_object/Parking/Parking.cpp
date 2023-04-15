@@ -2,36 +2,52 @@
 
 using namespace std;
 
+class Parking
+{
+private:
+  int hr, min;
+
+public:
+  void arrive(int, int);
+  void leave(int, int);
+};
+
+void Parking::arrive(int hr, int min)
+{
+  this->hr = hr;
+  this->min = min;
+}
+
+void Parking::leave(int hr, int min)
+{
+  int tempHr = this->hr;
+  int cnt = 0, a = 50, fee = 0;
+  while (tempHr < hr)
+  {
+    fee += a;
+
+    if (++cnt == 2)
+      a = 40;
+    else if (cnt == 10)
+      a = 30;
+
+    tempHr++;
+  }
+  if (min > this->min)
+    fee += a;
+
+  cout << fee << endl;
+}
+
 int main()
 {
-  int cnt = 0;
-  string str;
-  while (cin >> str)
+  int hr, min;
+  while (cin >> hr >> min)
   {
-    cout << "AB Circle #" << ++cnt << ":" << endl;
-    int cntA = 0, cntB = 0, len = str.size();
-
-    for (int i = 0; i < len; i++)
-      if (str[i] == 'a')
-        cntA++;
-      else
-        cntB++;
-
-    int minAB = min(cntA, cntB), maxAB = max(cntA, cntB);
-    for (int i = 0; i + minAB < len; i++)
-    {
-      if (cntA != cntB)
-      {
-        cout << i << "," << i + minAB << endl;
-        if (i + maxAB < len)
-          cout << i << "," << i + maxAB << endl;
-      }
-      else
-      {
-        cout << i << "," << i + cntA << endl;
-      }
-    }
-    cout << endl;
+    Parking car;
+    car.arrive(hr, min);
+    cin >> hr >> min;
+    car.leave(hr, min);
   }
 
   return 0;
