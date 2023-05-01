@@ -22,7 +22,7 @@ int main()
   {
     for (int j = 1; j < colCount; j++)
     {
-      if (a[i] == b[j])
+      if (a[i - 1] == b[j - 1])
       {
         table[i][j] = table[i - 1][j - 1] + 1;
         continue;
