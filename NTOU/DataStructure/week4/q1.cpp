@@ -9,7 +9,7 @@ typedef struct
   int exp;
 } term;
 
-int q1()
+int main()
 {
   int exp, counts[3] = {0};
   float coef;
