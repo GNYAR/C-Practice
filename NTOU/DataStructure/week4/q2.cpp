@@ -42,5 +42,9 @@ int main()
     cout << matrix[1][i].x << ' '
          << matrix[1][i].y << ' '
          << matrix[1][i].value << endl;
+
+  for (int i = 0; i < 2; i++)
+    delete[] matrix[i];
+
   return 0;
 }
