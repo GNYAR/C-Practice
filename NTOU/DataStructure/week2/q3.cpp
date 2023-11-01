@@ -13,7 +13,9 @@ long fib(long x)
     return t[x];
 
   long a = fib(x - 1), b = fib(x - 2);
-  t[x] = a + b, t[x - 1] = a, t[x - 2] = b;
+  t[x] = a + b;
+  t[x - 1] = a;
+  t[x - 2] = b;
   return a + b;
 }
 
