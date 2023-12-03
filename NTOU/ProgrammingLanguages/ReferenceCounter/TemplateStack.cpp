@@ -26,6 +26,16 @@ public:
     return (top > 0 ? items[--top] : NULL);
   }
 
+  void print()
+  {
+    for (int i = 0; i < top; i += 2)
+    {
+      char c[] = {items[i], items[i + 1], 0};
+      cout << c;
+    }
+    cout << '\n';
+  }
+
   void print_code()
   {
     for (int i = 0; i < top; i += 2)
@@ -56,6 +66,7 @@ int main()
           s.push(line[i]);
         break;
       case 'P':
+        s.print();
         break;
       case 'B':
         s.print_code();
