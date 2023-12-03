@@ -11,11 +11,11 @@ template <class T>
 class int_array_cell
 {
 private:
-  int _counter = 1;
+  int _counter;
   T *_memory;
 
 public:
-  int_array_cell(T *memory) : _memory(memory)
+  int_array_cell(T *memory) : _counter(1), _memory(memory)
   {
     cout << "int_array_cell is allocated" << endl;
   }

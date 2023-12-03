@@ -10,10 +10,10 @@ class stack
 {
 private:
   counter_ptr<T> items;
-  int top = 0, max_size = 100;
+  int top, max_size;
 
 public:
-  stack() : items("items", new T[max_size]){};
+  stack() : top(0), max_size(100), items("items", new T[100]){};
 
   void clear()
   {
@@ -47,6 +47,8 @@ public:
   {
     if (top < max_size)
       items[top++] = x;
+    else
+      cout << "stack is full\n";
   }
 };
 
