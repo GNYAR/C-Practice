@@ -2,7 +2,7 @@
   PART 三 (15分)
     2) 重覆 PART 一  二 的測試
 */
-#include "TemplateClass.h"
+#include "3_1_TemplateClass.h"
 
 int main()
 {
