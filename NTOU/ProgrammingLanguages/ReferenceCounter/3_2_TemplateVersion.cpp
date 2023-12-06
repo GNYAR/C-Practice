@@ -2,7 +2,11 @@
   PART 三 (15分)
     2) 重覆 PART 一  二 的測試
 */
-#include "3_1_TemplateClass.h"
+
+#include "3_1_TemplateClass.h" // 引入 template class
+
+// 宣告指標變數時設定 template 為 int
+// 例如: counter_ptr<int> ptr("ptr");
 
 int main()
 {
