@@ -1,66 +1,66 @@
 /*
-  PART ¥| (15¤À)
-    ¥Î template counter_ptr ¼g stack LIFO
+  PART å›› (15åˆ†)
+    ç”¨ template counter_ptr å¯« stack LIFO
 */
 #include <fstream>
-#include "3_1_TemplateClass.h" // ¤Ş¤J template class
+#include "3_1_TemplateClass.h" // å¼•å…¥ template class
 
-// ¥H¦r¤¸°}¦C¦s©ñ BIG5 º~¦r¡A¨C¤@­Óº~¦r¦û¨â­Ó¦r¤¸ªÅ¶¡¡A³Ì¤j®e¯Ç¬° 50 ­Óº~¦r (MAX / 2)
+// ä»¥å­—å…ƒé™£åˆ—å­˜æ”¾ BIG5 æ¼¢å­—ï¼Œæ¯ä¸€å€‹æ¼¢å­—ä½”å…©å€‹å­—å…ƒç©ºé–“ï¼Œæœ€å¤§å®¹ç´ç‚º 50 å€‹æ¼¢å­— (MAX / 2)
 #define MAX 100
 
 class stack
 {
 private:
-  counter_ptr<char> items; // «ü¦V¦r¤¸°}¦Cªº«ü¼Ğ
-  int top;                 // top °O¿ı¥Ø«e stack ªº³»ºİ¯Á¤Ş
+  counter_ptr<char> items; // æŒ‡å‘å­—å…ƒé™£åˆ—çš„æŒ‡æ¨™
+  int top;                 // top è¨˜éŒ„ç›®å‰ stack çš„é ‚ç«¯ç´¢å¼•
 
 public:
-  // «Ø¥ß stack¡Aªì©l¤Æ top¡A¨Ã°ÊºA°t¸m°}¦C
+  // å»ºç«‹ stackï¼Œåˆå§‹åŒ– topï¼Œä¸¦å‹•æ…‹é…ç½®é™£åˆ—
   stack() : top(0), items("items", new char[MAX]){};
 
-  // ²MªÅ stack
+  // æ¸…ç©º stack
   void clear()
   {
-    items = new char[MAX]; // °t¸m¥ş·s¦ì¸m¡Acounter_ptr ·|¦Û°ÊÄÀ©ñÂÂ¸ê®Æ
-    top = 0;               // ªì©l¤Æ top
+    items = new char[MAX]; // é…ç½®å…¨æ–°ä½ç½®ï¼Œcounter_ptr æœƒè‡ªå‹•é‡‹æ”¾èˆŠè³‡æ–™
+    top = 0;               // åˆå§‹åŒ– top
   }
 
-  // §R°£³Ì«á¤@­Óº~¦r
+  // åˆªé™¤æœ€å¾Œä¸€å€‹æ¼¢å­—
   void pop()
   {
-    if (top) // ­Y stack ¤£¬°ªÅ
+    if (top) // è‹¥ stack ä¸ç‚ºç©º
     {
-      top -= 2; // §R°£³»ºİ¤@­Óº~¦r
-      // ¦L¥X³Q§R°£ªºº~¦r
+      top -= 2; // åˆªé™¤é ‚ç«¯ä¸€å€‹æ¼¢å­—
+      // å°å‡ºè¢«åˆªé™¤çš„æ¼¢å­—
       char x[] = {items[top], items[top + 1], 0};
-      cout << "®³¥X³Ì«á¤@­Ó\t" << x << '\n';
+      cout << "stack pop " << x << '\n';
     }
   }
 
-  // ¨Ì§Ç¦L¥X stack ©Ò¦³º~¦r
+  // ä¾åºå°å‡º stack æ‰€æœ‰æ¼¢å­—
   void print()
   {
     for (int i = 0; i < top; i += 2)
-    { // ¨Ì§Ç±N¨â­Ó¦r¤¸²Õ¦X¦¨¤@­Óº~¦r¨Ã¦L¥X
+    { // ä¾åºå°‡å…©å€‹å­—å…ƒçµ„åˆæˆä¸€å€‹æ¼¢å­—ä¸¦å°å‡º
       char c[] = {items[i], items[i + 1], 0};
       cout << c;
     }
     cout << '\n';
   }
 
-  // ¥H¾ã¼Æ«¬ºA¨Ì§Ç¦L¥X stack ©Ò¦³¦r¤¸
+  // ä»¥æ•´æ•¸å‹æ…‹ä¾åºå°å‡º stack æ‰€æœ‰å­—å…ƒ
   void print_code()
   {
-    for (int i = 0; i < top; i += 2) // ¨Ì§Ç±N¨â­Ó¦r¤¸¥H¾ã¼Æ«¬ºA¦L¥X
+    for (int i = 0; i < top; i += 2) // ä¾åºå°‡å…©å€‹å­—å…ƒä»¥æ•´æ•¸å‹æ…‹å°å‡º
       cout << '(' << (int)items[i] << ' ' << (int)items[i + 1] << ')' << ' ';
     cout << '\n';
   }
 
-  // ±Nº~¦r·s¼W¦Ü stack
+  // å°‡æ¼¢å­—æ–°å¢è‡³ stack
   void push(char x[])
   {
-    if (top + 1 < MAX) // ½T»{¨¬°÷©ñ¶i¤@­Óº~¦r
-    { // ¨Ì§Ç¥[¤J¥Nªíº~¦rªº¨â­Ó¦r¤¸
+    if (top + 1 < MAX) // ç¢ºèªè¶³å¤ æ”¾é€²ä¸€å€‹æ¼¢å­—
+    {                  // ä¾åºåŠ å…¥ä»£è¡¨æ¼¢å­—çš„å…©å€‹å­—å…ƒ
       items[top++] = x[0];
       items[top++] = x[1];
     }
@@ -68,11 +68,11 @@ public:
       cout << "stack is full\n";
   }
 
-  // ÀË¬dº~¦r¬O§_¤w¦s¦b stack
+  // æª¢æŸ¥æ¼¢å­—æ˜¯å¦å·²å­˜åœ¨ stack
   bool includes(char x[])
   {
     for (int i = 0; i < top; i += 2)
-    { // ¨â­Ó¦r¤¸¤@²Õ¨Ì§ÇÀË¬d¡A­Y²Å¦X¶Ç¤Jªºº~¦r«h¦^¶Ç
+    { // å…©å€‹å­—å…ƒä¸€çµ„ä¾åºæª¢æŸ¥ï¼Œè‹¥ç¬¦åˆå‚³å…¥çš„æ¼¢å­—å‰‡å›å‚³
       if (items[i] == x[0] && items[i + 1] == x[1])
         return true;
     }
@@ -82,26 +82,27 @@ public:
 
 int main()
 {
-  // ¿é¤J¸ê®Æ¬° BIG5 º~¦r(character)¡G
-  //  BIG5 ¤º½X¥]§t¨â­Ó¦ì¤¸²Õ
-  //  ¨Ò¤l: §Ú   ¤º½X (-89 -38)
+  // è¼¸å…¥è³‡æ–™ç‚º BIG5 æ¼¢å­—(character)ï¼š
+  //  BIG5 å…§ç¢¼åŒ…å«å…©å€‹ä½å…ƒçµ„
+  //  ä¾‹å­: æˆ‘   å…§ç¢¼ (-89 -38)
 
   stack s;
-  int i;     // °O¿ıÅª¤J¦r¦êªº¯Á¤Ş
-  char x[2]; // °O¿ıÅª¤Jªºº~¦r
+  int i;           // è¨˜éŒ„è®€å…¥å­—ä¸²çš„ç´¢å¼•
+  char x[3] = {0}; // è¨˜éŒ„è®€å…¥çš„æ¼¢å­—
 
-  // ¿é¤JÀÉ test.txt ¬° BIG5 ½s½Xªº¤å¦rÀÉ
-  string line; // °O¿ıÅª¤Jªº«ü¥O
-  ifstream file("test.txt"); // ¶}±Ò¿é¤JÀÉ
-  if (file.is_open()) // ½T»{ÀÉ®×«Ç§_¶}±Ò¦¨¥\
+  // è¼¸å…¥æª” test.txt ç‚º BIG5 ç·¨ç¢¼çš„æ–‡å­—æª”
+  string line;               // è¨˜éŒ„è®€å…¥çš„æŒ‡ä»¤
+  ifstream file("test.txt"); // é–‹å•Ÿè¼¸å…¥æª”
+
+  if (file.is_open()) // ç¢ºèªæª”æ¡ˆæ˜¯å¦é–‹å•ŸæˆåŠŸ
   {
-    while (getline(file, line)) // ¨Ì§Ç±NÅª¨ú¨C¤@¦æ¿é¤J«ü¥O
+    while (getline(file, line)) // ä¾åºå°‡è®€å–æ¯ä¸€è¡Œè¼¸å…¥æŒ‡ä»¤
     {
-      switch (line[0]) // ÀË¬d«ü¥O¥\¯à
+      switch (line[0]) // æª¢æŸ¥æŒ‡ä»¤åŠŸèƒ½
       {
-      // ¿é¤J¸ê®Æ¥\¯à¡G¥Î I ¶}ÀYªí¥Ü
+      // è¼¸å…¥è³‡æ–™åŠŸèƒ½ï¼šç”¨ I é–‹é ­è¡¨ç¤º
       case 'I':
-        i = 2; // ¨Ì§ÇÅª¤J«ü¥Oªºº~¦r¡A¨Ã·s¼W¨ì stack
+        i = 2; // ä¾åºè®€å…¥æŒ‡ä»¤çš„æ¼¢å­—ï¼Œä¸¦æ–°å¢åˆ° stack
         while (i < line.size())
         {
           x[0] = line[i++];
@@ -110,43 +111,43 @@ int main()
         }
         break;
 
-      // ¦C¦L stack ¸ê®Æ¥\¯à: ¥Î P ªí¥Ü
+      // åˆ—å° stack è³‡æ–™åŠŸèƒ½: ç”¨ P è¡¨ç¤º
       case 'P':
-        s.print(); // ¨Ì§Ç¦L¥X stack ©Ò¦³º~¦r
+        s.print(); // ä¾åºå°å‡º stack æ‰€æœ‰æ¼¢å­—
         break;
 
-      // ¦C¦Lstack®Æ¤º½X¥\¯à: ¥Î B ªí¥Ü
-      // ¨Ì·Ó r ¶¶§Ç±N¥Ø«eªº¸ê®Æªº BIG5 ¤º½X¦C¦L¥X¨Ó
-      // ¨Ò¤l: §Ú¬O   ¤º½X¦C¦L => (-89 -38) (-84 79)
+      // åˆ—å°stackæ–™å…§ç¢¼åŠŸèƒ½: ç”¨ B è¡¨ç¤º
+      // ä¾ç…§ r é †åºå°‡ç›®å‰çš„è³‡æ–™çš„ BIG5 å…§ç¢¼åˆ—å°å‡ºä¾†
+      // ä¾‹å­: æˆ‘æ˜¯   å…§ç¢¼åˆ—å° => (-89 -38) (-84 79)
       case 'B':
-        s.print_code(); // ¥H¾ã¼Æ«¬ºA¨Ì§Ç¦L¥X stack ©Ò¦³¦r¤¸
+        s.print_code(); // ä»¥æ•´æ•¸å‹æ…‹ä¾åºå°å‡º stack æ‰€æœ‰å­—å…ƒ
         break;
 
-      // ®³¥X³Ì«á¤@­Ó¸ê®Æ: ¥Î R ªí¥Ü
+      // æ‹¿å‡ºæœ€å¾Œä¸€å€‹è³‡æ–™: ç”¨ R è¡¨ç¤º
       case 'R':
-        s.pop(); // §R°£³Ì«á¤@­Óº~¦r
+        s.pop(); // åˆªé™¤æœ€å¾Œä¸€å€‹æ¼¢å­—
         break;
 
-      // §¹¥ş²M°£stack¸ê®Æ¥\¯à: ¥Î C ªí¥Ü
+      // å®Œå…¨æ¸…é™¤stackè³‡æ–™åŠŸèƒ½: ç”¨ C è¡¨ç¤º
       case 'C':
-        s.clear(); // ²MªÅ stack
+        s.clear(); // æ¸…ç©º stack
         break;
 
-      // ¬d´M¸ê®Æ¥\¯à: ¥Î ? ¶}ÀYªí¥Ü
-      // ¬d´M¤@­ÓBIG5º~¦r¬O§_¦b stack ¤¤
-      // µ²ªG: ¬O/§_
+      // æŸ¥å°‹è³‡æ–™åŠŸèƒ½: ç”¨ ? é–‹é ­è¡¨ç¤º
+      // æŸ¥å°‹ä¸€å€‹BIG5æ¼¢å­—æ˜¯å¦åœ¨ stack ä¸­
+      // çµæœ: Yes/No
       case '?':
-        // Åª¤J«ü¥Oªºº~¦r
+        // è®€å…¥æŒ‡ä»¤çš„æ¼¢å­—
         x[0] = line[2];
         x[1] = line[3];
-        // ¦L¥X¬O§_º~¦r¤w¦s¦b stack
-        cout << (s.includes(x) ? "¬O" : "§_") << '\n';
+        // å°å‡ºæ˜¯å¦æ¼¢å­—å·²å­˜åœ¨ stack
+        cout << (s.includes(x) ? "Yes" : "No") << '\n';
         break;
       default:
         break;
       }
     }
-    file.close(); // Ãö³¬ÀÉ®×
+    file.close(); // é—œé–‰æª”æ¡ˆ
   }
   else
     cout << "Unable to open file" << endl;
