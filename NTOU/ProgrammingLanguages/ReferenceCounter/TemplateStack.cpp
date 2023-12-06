@@ -72,52 +72,74 @@ public:
 
 int main()
 {
-  stack s;
-  int i;
-  char x[2];
-
-  string line;
-  ifstream file("test.txt");
-  if (file.is_open())
   {
-    while (getline(file, line))
+    stack s;
+    int i;
+    char x[2];
+
+    // 輸入資料為 BIG5 漢字(character)：
+    //  BIG5 內碼包含兩個位元組
+    //  例子: 我   內碼 (-89 -38)
+
+    // 輸入檔 test.txt 為 BIG5 編碼的文字檔
+    string line;
+    ifstream file("test.txt");
+    if (file.is_open())
     {
-      switch (line[0])
+      while (getline(file, line))
       {
-      case 'I':
-        i = 2;
-        while (i < line.size())
+        switch (line[0])
         {
-          x[0] = line[i++];
-          x[1] = line[i++];
-          s.push(x);
+        // 輸入資料功能：用 I 開頭表示
+        case 'I':
+          i = 2;
+          while (i < line.size())
+          {
+            x[0] = line[i++];
+            x[1] = line[i++];
+            s.push(x);
+          }
+          break;
+
+        // 列印 stack 資料功能: 用 P 表示
+        case 'P':
+          s.print();
+          break;
+
+        // 列印stack料內碼功能: 用 B 表示
+        // 依照 r 順序將目前的資料的 BIG5 內碼列印出來
+        // 例子: 我是   內碼列印 => (-89 -38) (-84 79)
+        case 'B':
+          s.print_code();
+          break;
+
+        // 拿出最後一個資料: 用 R 表示
+        case 'R':
+          s.pop();
+          break;
+
+        // 完全清除stack資料功能: 用 C 表示
+        case 'C':
+          s.clear();
+          break;
+
+        // 查尋資料功能: 用 ? 開頭表示
+        // 查尋一個BIG5漢字是否在 stack 中
+        // 結果: 是/否
+        case '?':
+          x[0] = line[2];
+          x[1] = line[3];
+          cout << (s.includes(x) ? "是" : "否") << '\n';
+          break;
+        default:
+          break;
         }
-        break;
-      case 'P':
-        s.print();
-        break;
-      case 'B':
-        s.print_code();
-        break;
-      case 'R':
-        s.pop();
-        break;
-      case 'C':
-        s.clear();
-        break;
-      case '?':
-        x[0] = line[2];
-        x[1] = line[3];
-        cout << (s.includes(x) ? "是" : "否") << '\n';
-        break;
-      default:
-        break;
       }
+      file.close();
     }
-    file.close();
+    else
+      cout << "Unable to open file" << endl;
   }
-  else
-    cout << "Unable to open file" << endl;
 
   system("pause");
   return 0;
