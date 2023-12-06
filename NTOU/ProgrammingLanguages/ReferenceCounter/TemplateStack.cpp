@@ -1,29 +1,34 @@
 /*
-  PART 四 (15分)
-    用 template counter_ptr 寫 stack LIFO
+  PART �| (15��)
+    �� template counter_ptr �g stack LIFO
 */
 #include <fstream>
 #include "TemplateClass.h"
+#define MAX 100
 
-template <class T>
 class stack
 {
 private:
-  counter_ptr<T> items;
+  counter_ptr<char> items;
   int top, max_size;
 
 public:
-  stack() : top(0), max_size(100), items("items", new T[100]){};
+  stack() : top(0), max_size(MAX), items("items", new char[MAX]){};
 
   void clear()
   {
-    items = new T[max_size];
+    items = new char[max_size];
     top = 0;
   }
 
-  T pop()
+  void pop()
   {
-    return (top > 0 ? items[--top] : NULL);
+    if (top > 0)
+    {
+      top -= 2;
+      char x[] = {items[top], items[top + 1], 0};
+      cout << "stack pop " << x << '\n';
+    }
   }
 
   void print()
@@ -43,18 +48,34 @@ public:
     cout << '\n';
   }
 
-  void push(T x)
+  void push(char x[])
   {
-    if (top < max_size)
-      items[top++] = x;
+    if (top + 1 < max_size)
+    {
+      items[top++] = x[0];
+      items[top++] = x[1];
+    }
     else
       cout << "stack is full\n";
+  }
+
+  bool includes(char x[])
+  {
+    for (int i = 0; i < top; i += 2)
+    {
+      if (items[i] == x[0] && items[i + 1] == x[1])
+        return true;
+    }
+    return false;
   }
 };
 
 int main()
 {
-  stack<char> s;
+  stack s;
+  int i;
+  char x[2];
+
   string line;
   ifstream file("test.txt");
   if (file.is_open())
@@ -64,8 +85,13 @@ int main()
       switch (line[0])
       {
       case 'I':
-        for (int i = 2; i < line.size(); i++)
-          s.push(line[i]);
+        i = 2;
+        while (i < line.size())
+        {
+          x[0] = line[i++];
+          x[1] = line[i++];
+          s.push(x);
+        }
         break;
       case 'P':
         s.print();
@@ -75,12 +101,14 @@ int main()
         break;
       case 'R':
         s.pop();
-        s.pop();
         break;
       case 'C':
         s.clear();
         break;
       case '?':
+        x[0] = line[2];
+        x[1] = line[3];
+        cout << (s.includes(x) ? "�O" : "�_") << '\n';
         break;
       default:
         break;
@@ -91,60 +119,6 @@ int main()
   else
     cout << "Unable to open file" << endl;
 
+  system("pause");
   return 0;
 }
-/*
-1.	輸入資料為BIG5漢字(character)：
-    BIG5內碼包含兩個位元組
-    例子:
-    我	內碼 (-89 -38)
-
-2. 輸入資料功能：
-用I開頭表示
-
-
-3.	列印stack資料功能:
-用P開頭表示
-
-
-4.	列印stack料內碼功能:
-用B開頭表示
-
-  依照r順序將目前的資料的BIG5內碼列印出來
-  例子:
-  stack資料順序
-  我是
-  內碼列印 =>
-  (-89 -38) (-84 79)
-
-5.	拿一個資料
-用R表示
-
-6.	完全清除stack資料功能
-用C表示
-
-7. 查尋資料功能:
-用?開頭表示
-  查尋一個BIG5漢字是否在stack中：
-  結果:	是		否
-
-
-=======================================================================
-test example
-I 程式必須要能讀入測試檔
-I 程式要徹底清除樹中資料使用的記憶體
-? 程
-? 體
-R // 拿出最後一個    體
-? 程
-? 體
-P
-B
-C
-P
-I 程式要徹底清除樹中資料使用的記憶體
-P
-B
-? 讀
-=======================================================================
-*/
