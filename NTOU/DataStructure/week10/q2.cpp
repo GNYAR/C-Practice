@@ -2,115 +2,112 @@
 
 using namespace std;
 
-struct node
+struct term
 {
 	int coef, exp;
-	node *link;
+	term *link;
 };
 
-void insert(node *&head, node *x)
+void insert(term *&head, int coef, int exp)
 {
-	node *ptr = head, *pre = NULL;
-	while (ptr && ptr->exp > x->exp)
+	if (!head)
 	{
-		pre = ptr;
+		head = new term{coef, exp, NULL};
+		return;
+	}
+	term *ptr = head, *trail = NULL;
+	while (ptr && ptr->exp > exp)
+	{
+		trail = ptr;
 		ptr = ptr->link;
 	}
-
-	if (ptr && ptr->exp == x->exp)
-	{
-		ptr->coef += x->coef;
-		delete x;
-	}
+	if (ptr && ptr->exp == exp)
+		ptr->coef += coef;
+	else if (trail)
+		trail->link = new term{coef, exp, ptr};
 	else
-	{
-		x->link = ptr;
-		if (pre)
-			pre->link = x;
-		else
-			head = x;
-	}
+		head = new term{coef, exp, ptr};
 }
 
-void printTerm(node term)
+void print_term(term *x)
 {
-	cout << term.coef;
-	switch (term.exp)
+	switch (x->exp)
 	{
 	case 0:
+		cout << x->coef;
 		break;
 	case 1:
-		cout << "x";
+		cout << x->coef << "x";
 		break;
 	default:
-		cout << "x^" << term.exp;
+		cout << x->coef << "x^" << x->exp;
 		break;
 	}
-}
+};
 
-void print(node *head)
+void print(term *head)
 {
-	printTerm(*head);
-	for (node *ptr = head->link; ptr; ptr = ptr->link)
+	if (!head)
+		return;
+	print_term(head);
+	head = head->link;
+	while (head)
 	{
 		cout << " + ";
-		printTerm(*ptr);
+		print_term(head);
+		head = head->link;
 	}
-	cout << endl;
+	cout << '\n';
 }
 
-node *sum(node *p[2])
+void delete_list(term *head)
 {
-	node *ptr[2] = {p[0], p[1]};
-	node *head = NULL;
+	while (head)
+	{
+		term *temp = head->link;
+		delete head;
+		head = temp;
+	}
+}
+
+int main()
+{
+	term *p[2] = {NULL, NULL}, *res = NULL;
+	int coef, exp;
 	for (int i = 0; i < 2; i++)
 	{
-		while (ptr[i])
+		cin >> coef;
+		while (coef != -1)
 		{
-			insert(head, new node(*ptr[i]));
-			ptr[i] = ptr[i]->link;
-		}
-	}
-	return head;
-}
-
-node *product(node *p[2])
-{
-	node *ptr[2] = {p[0], p[1]};
-	node *head = NULL;
-	while (ptr[0])
-	{
-		ptr[1] = p[1];
-		while (ptr[1])
-		{
-			node *x = new node(*ptr[0]);
-			x->coef *= ptr[1]->coef;
-			x->exp += ptr[1]->exp;
-			insert(head, x);
-			ptr[1] = ptr[1]->link;
-		}
-		ptr[0] = ptr[0]->link;
-	}
-	return head;
-}
-
-int q2()
-{
-	node *head[2] = {NULL, NULL};
-	int c, e;
-	for (int i = 0; i < 2; i++)
-	{
-		cin >> c;
-		while (c != -1)
-		{
-			cin >> e;
-			insert(head[i], new node{c, e, NULL});
-			cin >> c;
+			cin >> exp;
+			insert(p[i], coef, exp);
+			insert(res, coef, exp);
+			cin >> coef;
 		}
 	}
 	cout << "add = ";
-	print(sum(head));
+	print(res);
+	delete_list(res);
+
+	res = NULL;
 	cout << "mult = ";
-	print(product(head));
+	term *t[2] = {p[0], NULL};
+	while (t[0])
+	{
+		t[1] = p[1];
+		while (t[1])
+		{
+			coef = t[0]->coef * t[1]->coef;
+			exp = t[0]->exp + t[1]->exp;
+			insert(res, coef, exp);
+			t[1] = t[1]->link;
+		}
+		t[0] = t[0]->link;
+	}
+	print(res);
+
+	delete_list(p[0]);
+	delete_list(p[1]);
+	delete_list(res);
 	return 0;
 }
