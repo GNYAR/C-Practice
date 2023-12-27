@@ -4,25 +4,31 @@
 
 using namespace std;
 
-void dfs(vector<vector<int>> &graph, int x, vector<int> &dfn, vector<int> &low, int &cnt, int p)
+vector<vector<int>> graph;
+vector<int> dfn, low;
+int cnt = 0;
+
+void dfnlow(int v, int parent)
 {
-	dfn[x] = low[x] = cnt++;
-	for (int i = 0; i < graph[x].size(); i++)
+	dfn[v] = low[v] = cnt++;
+	for (int i = 0; i < graph[v].size(); i++)
 	{
-		int y = graph[x][i];
-		if (dfn[y] == -1)
-		{
-			dfs(graph, y, dfn, low, cnt, x);
-			low[x] = min(low[x], low[y]);
+		int u = graph[v][i];
+		if (dfn[u] == -1)
+		{ // unvisited
+			dfnlow(u, v);
+			low[v] = min(low[v], low[u]);
 		}
-		else if (p > -1 && y != p)
-			low[x] = min(low[x], dfn[y]);
+		else if (parent > -1 && u != parent)
+		{ // back edge
+			low[v] = min(low[v], dfn[u]);
+		}
 	}
 }
 
 int main()
 {
-	vector<vector<int>> graph;
+	// adjacency list
 	int x, y;
 	while (cin >> x >> y)
 	{
@@ -35,9 +41,11 @@ int main()
 	for (int i = 0; i < graph.size(); i++)
 		sort(graph[i].begin(), graph[i].end());
 
-	vector<int> dfn(graph.size(), -1), low(graph.size(), -1);
-	x = 0;
-	dfs(graph, 3, dfn, low, x, -1);
+	// init
+	dfn.resize(graph.size(), -1);
+	low = dfn;
+
+	dfnlow(3, -1);
 
 	cout << "   ";
 	for (int i = 0; i < graph.size(); i++)
