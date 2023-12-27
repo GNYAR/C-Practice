@@ -42,3 +42,45 @@ Week 7
 1. 經典的鐵軌問題 (permutation at a railway track) [Description](./week7/q1.MD) | [Code](./week7/q1.cpp)
 2. 回文結構數字 (palindrome numbers) [Description](./week7/q2.MD) | [Code](./week7/q2.cpp)
 3. 還是要中序 (conversion of infix expression) [Description](./week7/q3.MD) | [Code](./week7/q3.cpp)
+
+### Final
+
+Week 9
+
+1. Linked List 單字統計 [Description](./week9/q1.MD) | [Code](./week9/q1.cpp)
+2. 產品價格排序 (sorting price) [Description](./week9/q2.MD) | [Code](./week9/q2.cpp)
+
+Week 10
+
+1. QQ 鍵盤 [Description](./week10/q1.MD) | [Code](./week10/q1.cpp)
+2. 多項式加法與乘法 (adding and multiplying polynomials) [Description](./week10/q2.MD) | [Code](./week10/q2.cpp)
+
+Week 11
+
+1. 二元樹的陣列表示法 (binary tree array) [Description](./week11/q1.MD) | [Code](./week11/q1.cpp)
+2. 建立二元樹，求前序中序後序和平衡係數 (binary tree preorder, inorder, postorder, blance factor) [Description](./week11/q2.MD) | [Code](./week11/q2.cpp)
+3. 算式樹 [Description](./week11/q3.MD) | [Code](./week11/q3.cpp)
+
+Week 12
+
+1. Min Heap 插入節點 (insertion in min heap) [Description](./week12/q1.MD) | [Code](./week12/q1.cpp)
+2. 二元搜尋樹刪除節點 (deletion in binary search tree) [Description](./week12/q2.MD) | [Code](./week12/q2.cpp)
+3. 二元搜尋樹找 Predecessor (predecessors in binary search tree) [Description](./week12/q3.MD) | [Code](./week12/q3.cpp)
+
+Week 13
+
+1. Min Heap 刪除節點 (deletion in min heap) [Description](./week13/q1.MD) | [Code](./week13/q1.cpp)
+2. Almost Union-Find [Description](./week13/q2.MD) | [Code](./week13/q2.cpp)
+3. 盤子問題 (plate stacks) ~~Description~~ | [Code](./week13/q3.cpp)
+
+Week 14
+
+1. 相鄰矩陣與相鄰串列 (adjacency matrix and list) [Description](./week14/q1.MD) | [Code](./week14/q1.cpp)
+2. 網路連通性 (connected graph) [Description](./week14/q2.MD) | [Code](./week14/q2.cpp)
+3. DFS 與 BFS (Depth First Search & Breadth First Search) [Description](./week14/q3.MD) | [Code](./week14/q3.cpp)
+
+Week 15
+
+1. 計算圖形的 low 與 dfn 值 [Description](./week15/q1.MD) | [Code](./week15/q1.cpp)
+2. Prim’s algorithm [Description](./week15/q2.MD) | [Code](./week15/q2.cpp)
+3. ~~Description~~ | [Code](./week15/q3.cpp)
